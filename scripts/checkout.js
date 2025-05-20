@@ -16,12 +16,7 @@ cart.forEach((cartItem) => {
     }
   });
 
-  // Add a check to avoid errors if product is not found
-  if (!matchingProduct) {
-    console.warn(`No matching product found for cart item with productId: ${productId}`);
-    return; // Skip rendering this cart item
-  }
-
+  
   cartSummaryHTML += `
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
