@@ -1,22 +1,26 @@
 import { cart, removeFromCart } from '../data/cart.js';
-import { products } from '../data/products.js';
+import { products } from '../data/products.js'
 import { formatCurrency } from './utils/money.js';
+
+const today = dayjs();
+const deliveryDate = today.add(7,'days');
+console.log(deliveryDate.format('dddd, MMMM D'));
 
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
-  let matchingProduct;
+  // Use find() instead of forEach for better product matching
+  const matchingProduct = products.find((product) => product.id === productId);
 
-  // Keep using forEach to find the matching product
-  products.forEach((product) => {
-    if (product.id === productId) {
-      matchingProduct = product;
-    }
-  });
 
-  
+  // Add error handling for missing products
+  if (!matchingProduct) {
+    console.error(`Product not found for ID: ${productId}`);
+    return; // Skip this iteration
+  }
+
   cartSummaryHTML += `
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
