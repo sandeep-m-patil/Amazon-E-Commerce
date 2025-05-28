@@ -21,7 +21,7 @@
   <body>
     <div class="amazon-header">
       <div class="amazon-header-left-section">
-        <a href="index.html" class="header-link">
+        <a href="amazon.html" class="header-link">
           <img class="amazon-logo"
             src="images/amazon-logo-white.png">
           <img class="amazon-mobile-logo"
@@ -88,5 +88,11 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const url = new URL(window.location.href);
+      console.log(url.searchParams.get('orderId'));
+      console.log(url.searchParams.get('productId'));
+    </script>
   </body>
 </html>
