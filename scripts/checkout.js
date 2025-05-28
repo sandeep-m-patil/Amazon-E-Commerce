@@ -7,14 +7,13 @@ import { deliveryOptions } from '../data/deliveryOptions.js';
 
 let cartSummaryHTML = '';
 
+document.querySelector('.js-cart-quantity-link').innerHTML =`${cart.length} items`;
+
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
   const matchingProduct = products.find((product) => product.id === productId);
   console.table(matchingProduct);
-
-
-
   const deliveryOptionId = cartItem.deliveryOptionId;
   const deliveryOption = deliveryOptions.find(
     (option) => option.id === deliveryOptionId
