@@ -1,14 +1,15 @@
 class Cart {
-    cartItem;
-    localStorageKey;
+    cartItem;// Public property to hold cart items
+    #localStorageKey; // Private property to hold the local storage key
 
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage();
     }
 
-    loadFromStorage() {
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+    // Private method to load cart items from local storage
+    #loadFromStorage() {
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
         if (!this.cartItems) {
             this.cartItems = [
                 {
@@ -26,7 +27,7 @@ class Cart {
     }
 
     saveToStorage() {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(cart))
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(cart))
     }
 
     addToCart(productId) {
