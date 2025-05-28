@@ -7,18 +7,13 @@ import { deliveryOptions } from '../data/deliveryOptions.js';
 
 let cartSummaryHTML = '';
 
+
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
-
-  // Use find() instead of forEach for better product matching
   const matchingProduct = products.find((product) => product.id === productId);
+  console.table(matchingProduct);
 
 
-  // Add error handling for missing products
-  if (!matchingProduct) {
-    console.error(`Product not found for ID: ${productId}`);
-    return; // Skip this iteration
-  }
 
   const deliveryOptionId = cartItem.deliveryOptionId;
   const deliveryOption = deliveryOptions.find(
@@ -33,7 +28,6 @@ cart.forEach((cartItem) => {
   const today = dayjs();
   const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
   const dateString = deliveryDate.format('dddd, MMMM D');
-
 
   cartSummaryHTML += `
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -68,13 +62,14 @@ cart.forEach((cartItem) => {
           <div class="delivery-options-title">
             Choose a delivery option:
           </div>
-        ${deliveryOptionsHTML(matchingProduct, cartItem)}
+          ${deliveryOptionsHTML(matchingProduct, cartItem)}
         </div>
 
       </div>
     </div>
   `;
 });
+
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
