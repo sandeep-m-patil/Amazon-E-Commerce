@@ -1,15 +1,16 @@
-import { formatCurrency } from "../scripts/utils/money.js"
+import {formatCurrency} from '../scripts/utils/money.js';
 
 export function getProduct(productId) {
-  let matchingItem;
+  let matchingProduct;
+
   products.forEach((product) => {
-    if (product.id === productId)
-      matchingItem = product;
-  })
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
 
-  return matchingItem;
+  return matchingProduct;
 }
-
 
 class Product {
   id;
@@ -26,17 +27,67 @@ class Product {
     this.priceCents = productDetails.priceCents;
   }
 
-  getStarsUrl(){
+  getStarsUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
 
   getPrice() {
-    return `$${formatCurrency(this.priceCents)}`
+    return `$${formatCurrency(this.priceCents)}`;
   }
 
-
+  extraInfoHTML() {
+    return '';
+  }
 }
 
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML() {
+    // super.extraInfoHTML();
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size chart
+      </a>
+    `;
+  }
+}
+
+/*
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+*/
+
+/*
+console.log(this);
+
+const object2 = {
+  a: 2,
+  b: this.a
+};
+*/
+
+/*
+function logThis() {
+  console.log(this);
+}
+logThis();
+logThis.call('hello');
+
+this
+const object3 = {
+  method: () => {
+    console.log(this);
+  }
+};
+object3.method();
+*/
 
 export const products = [
   {
@@ -697,6 +748,9 @@ export const products = [
       "mens"
     ]
   }
-].map((product) => new Product(product));
-
-
+].map((productDetails) => {
+  if (productDetails.type === 'clothing') {
+    return new Clothing(productDetails);
+  }
+  return new Product(productDetails);
+});
